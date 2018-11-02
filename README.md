@@ -1,2 +1,2 @@
-# TMA4220_project_2
+# TMA4220 project 2
 Our solution to project 2
