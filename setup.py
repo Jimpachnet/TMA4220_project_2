@@ -12,6 +12,6 @@ setup(name='Project_2',
           'scipy',
           'matplotlib',
           'numpy',
-          'tqdm',
+          'h5py',
       ],
      )

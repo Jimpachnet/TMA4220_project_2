@@ -7,7 +7,7 @@ Main file of the project.
 import argparse
 import numpy as np
 
-from project_2.mesh.mesh import Mesh
+from project_2.infrastructure.mesh import Mesh
 
 
 def main():
@@ -20,7 +20,8 @@ def main():
 
     if args.mesh:
         mesh = Mesh()
-        mesh.loadTest()
+        mesh.loadMesh()
+        mesh.plotMesh()
 
 
 if __name__ == "__main__":
