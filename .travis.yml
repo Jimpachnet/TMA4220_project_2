@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.5"
+cache: pip
+install:
+  - pip install -r requirements.txt
+  - pip install -e .
+before_script:
+  - cd project_2/tests
+script:
+  - python test.py
