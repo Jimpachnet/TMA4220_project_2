@@ -3,3 +3,4 @@ matplotlib
 numpy
 meshio
 h5py
+quadpy

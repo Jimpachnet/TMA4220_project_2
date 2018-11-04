@@ -15,7 +15,7 @@ class Mesh:
     Represents a infrastructure
     """
 
-    def loadMesh(self, path = "/home/leon/Documents/RCI/TMA4220_NumPDE/models/export/gate.med"):
+    def loadMesh(self, path = "/home/leon/Documents/RCI/TMA4220_NumPDE/models/export/cube.med"):
         print("[Info] Loading infrastructure")
         mesh = meshio.read(path)
         self.tetraeders = mesh.cells['tetra']

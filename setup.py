@@ -13,5 +13,6 @@ setup(name='Project_2',
           'matplotlib',
           'numpy',
           'h5py',
+          'quadpy',
       ],
      )
