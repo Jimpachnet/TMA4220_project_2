@@ -12,7 +12,7 @@ def plot_scatter_structure(mesh,ux,uy,uz):
     x = mesh.supports[:,0]
     y = mesh.supports[:, 1]
     z = mesh.supports[:, 2]
-    c = v = ux
+    c = v = np.squeeze(ux)
 
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
