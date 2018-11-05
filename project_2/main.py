@@ -27,7 +27,8 @@ def main():
         mesh.plotMesh()
     if args.solvequadpy:
         mesh = Mesh()
-        mesh.loadMesh("/home/leon/Documents/RCI/TMA4220_NumPDE/models/export/cube_coarse.med")
+        mesh.loadMesh("/home/leon/Documents/RCI/TMA4220_NumPDE/models/export/cube_2.med")
+        mesh.plotMesh()
         ux,uy,uz = solve_quadpy(mesh)
         plot_scatter_structure(mesh,ux,uy,uz)
 

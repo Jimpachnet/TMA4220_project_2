@@ -22,13 +22,6 @@ def solve_quadpy(mesh):
     print("[Info] Generating stiffness matrix")
     K = generate_stiffness_matrix(mesh)
 
-    absk = K-K.T
-    plt.imshow(absk, interpolation='nearest', cmap=plt.cm.plasma,
-               extent=(0.5, np.shape(absk)[0] + 0.5, 0.5, np.shape(absk)[1] + 0.5))
-    plt.colorbar()
-    plt.show()
-    print(np.linalg.matrix_rank(absk))
-
     print(np.linalg.det(K))
     print(np.linalg.cond(K))
     print(np.shape(K))
@@ -41,18 +34,48 @@ def solve_quadpy(mesh):
     nr = np.shape(mesh.supports)[0]
     bc_count = 0
     for i in range(nr):
-        if mesh.supports[i, 2] == 0:
+        if mesh.supports[i, 2] == 0 or mesh.supports[i, 2] == 200:
             bc_count+=1
-            K[i, :] = np.zeros((1, nr*3))
-            K[i, i] = 1
-            K[i+1, :] = np.zeros((1, nr*3))
-            K[i+1, i+1] = 1
-            K[i+2, :] = np.zeros((1, nr*3))
-            K[i+2, i+2] = 1
-            b[i] = 0
-            b[i+1] = 0
-            b[i+2] = 0
+            K[i*3, :] = np.zeros((1, nr*3))
+            K[i*3, i*3] = 1
+            K[i*3+1, :] = np.zeros((1, nr*3))
+            K[i*3+1, i*3+1] = 1
+            K[i*3+2, :] = np.zeros((1, nr*3))
+            K[i*3+2, i*3+2] = 1
+            b[i*3] = 0
+            b[i*3+1] = 0
+            b[i*3+2] = 0
+        if mesh.supports[i, 1] == 0 or mesh.supports[i, 1] == 200:
+            bc_count+=1
+            K[i*3, :] = np.zeros((1, nr*3))
+            K[i*3, i*3] = 1
+            K[i*3+1, :] = np.zeros((1, nr*3))
+            K[i*3+1, i*3+1] = 1
+            K[i*3+2, :] = np.zeros((1, nr*3))
+            K[i*3+2, i*3+2] = 1
+            b[i*3] = 0
+            b[i*3+1] = 0
+            b[i*3+2] = 0
+        if mesh.supports[i, 0] == 0 or mesh.supports[i, 0] == 200:
+            bc_count+=1
+            K[i*3, :] = np.zeros((1, nr*3))
+            K[i*3, i*3] = 1
+            K[i*3+1, :] = np.zeros((1, nr*3))
+            K[i*3+1, i*3+1] = 1
+            K[i*3+2, :] = np.zeros((1, nr*3))
+            K[i*3+2, i*3+2] = 1
+            b[i*3] = 0
+            b[i*3+1] = 0
+            b[i*3+2] = 0
+
     print("[Info] Imposed Dirichlet BC on "+str(bc_count)+" points")
+
+
+    absk = np.sin(K)
+    plt.imshow(absk, interpolation='nearest', cmap=plt.cm.plasma,
+               extent=(0.5, np.shape(absk)[0] + 0.5, 0.5, np.shape(absk)[1] + 0.5))
+    plt.colorbar()
+    plt.show()
 
     print(np.linalg.det(K))
     print(np.linalg.cond(K))
@@ -171,7 +194,7 @@ def generate_stiffness_matrix(mesh):
 
 
         if ~np.isclose(np.linalg.det(local_K),0):
-            print("ERROR")
+            print("ERROR! Determinant of local Matrix should be zero bit is "+str(np.linalg.det(local_K)))
 
         for i in range(4):
             for j in range(4):
