@@ -22,7 +22,19 @@ class Mesh:
         self.supports = mesh.points
         print("[Info] Loaded " + str(self.supports.shape[0]) + " supports")
         print("[Info] Loaded " + str(self.tetraeders.shape[0]) + " simplices")
-
+    def loadexamplemesh(self):
+        self.supports = np.array([
+            (0, 0, 0), (2, 0, 0), (2, 2, 0), (0, 2, 0),
+            (0, 0, 12), (2, 0, 12), (2, 2, 12), (0, 2, 12),
+        ])
+        self.tetraeders = np.array([
+            [21, 39, 38, 52],
+            [9, 50, 2, 3],
+            [12, 45, 15, 54],
+            [39, 43, 20, 52],
+            [41, 45, 24, 54]
+        ])
+        print(np.shape(self.supports))
     def plotMesh(self):
         print("[Info] Plotting infrastructure")
         fig = plt.figure()
