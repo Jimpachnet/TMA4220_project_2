@@ -4,3 +4,6 @@ numpy
 meshio
 h5py
 quadpy
+plotly
+trimesh
+pyglet

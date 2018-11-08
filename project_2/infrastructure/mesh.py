@@ -19,6 +19,7 @@ class Mesh:
         print("[Info] Loading infrastructure")
         mesh = meshio.read(path)
         self.tetraeders = mesh.cells['tetra']
+        self.triangles = mesh.cells['triangle']
         self.supports = mesh.points
         print("[Info] Loaded " + str(self.supports.shape[0]) + " supports")
         print("[Info] Loaded " + str(self.tetraeders.shape[0]) + " simplices")

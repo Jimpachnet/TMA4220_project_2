@@ -37,7 +37,7 @@ class P1ReferenceElement:
         :param x: The position at which the gradient should be calculated
         :return: Matrix 2x3 containing the gradients
         """
-        if (x[0] + x[1] <= 1 and x[0] >= 0 and x[1] >= 0):
+        if (x[0] + x[1]+x[2] <= 1 and x[0] >= 0 and x[1] >= 0 and x[2] >=0):
             grad = np.matrix('-1 1 0 0; -1 0 1 0; -1 0 0 1')
         else:
             grad = np.matrix('0 0 0 0; 0 0 0 0; 0 0 0 0')
