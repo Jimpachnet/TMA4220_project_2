@@ -9,7 +9,7 @@ import numpy as np
 
 from project_2.infrastructure.mesh import Mesh
 from project_2.solvers.solver_quadpy import solve_quadpy
-from project_2.visualization.scatter_structure import plot_scatter_structure
+from project_2.visualization.scatter_structure import plot_scatter_structure,plot_stress,plot_stress_meshed,export_matlab,trimeshit,trisurfit
 
 
 def main():
@@ -27,10 +27,16 @@ def main():
         mesh.plotMesh()
     if args.solvequadpy:
         mesh = Mesh()
-        mesh.loadMesh("/home/leon/Documents/RCI/TMA4220_NumPDE/models/export/cube_2.med")
+        mesh.loadMesh("/home/leon/Documents/RCI/TMA4220_NumPDE/models/export/pyratest.med")
+        #mesh.loadexamplemesh()
         mesh.plotMesh()
-        ux,uy,uz = solve_quadpy(mesh)
-        plot_scatter_structure(mesh,ux,uy,uz)
+        stress, ux,uy,uz = solve_quadpy(mesh)
+        #plot_scatter_structure(mesh,ux,uy,uz)
+        plot_stress(mesh,stress)
+        #plot_stress_meshed(mesh,stress)
+        #export_matlab(mesh,stress)
+        #trimeshit(mesh,0)
+        #trisurfit(mesh,stress)
 
 
 if __name__ == "__main__":

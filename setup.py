@@ -14,5 +14,8 @@ setup(name='Project_2',
           'numpy',
           'h5py',
           'quadpy',
+          'plotly',
+          'trimesh',
+          'pyglet',
       ],
      )

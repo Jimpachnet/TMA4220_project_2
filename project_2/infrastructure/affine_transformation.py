@@ -70,6 +70,10 @@ class AffineTransformation:
         detJ = np.linalg.det(J)
         if np.isclose(detJ, 0):
             print(J)
+            print(v0)
+            print(v1)
+            print(v2)
+            print(v3)
             raise ValueError('J is singular and can therfore not be inverted.')
 
         return np.linalg.inv(J)
