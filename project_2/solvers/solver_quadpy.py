@@ -39,7 +39,7 @@ def solve_quadpy(mesh,showstats=False):
     bc_count = 0
     for i in range(nr):
         if True:
-            if mesh.supports[i, 2] == 0 or mesh.supports[i, 2] == 0:
+            if mesh.supports[i, 2] == 0:
                 bc_count+=1
                 K[i*3, :] = np.zeros((1, nr*3))
                 K[i*3, i*3] = 1
@@ -50,6 +50,18 @@ def solve_quadpy(mesh,showstats=False):
                 b[i*3] = 0
                 b[i*3+1] = 0
                 b[i*3+2] = 0
+        if True:
+            if mesh.supports[i, 2] == 0.15:
+                bc_count+=1
+                K[i*3, :] = np.zeros((1, nr*3))
+                K[i*3, i*3] = 1
+                K[i*3+1, :] = np.zeros((1, nr*3))
+                K[i*3+1, i*3+1] = 1
+                K[i*3+2, :] = np.zeros((1, nr*3))
+                K[i*3+2, i*3+2] = 1
+                b[i*3] = 0.000
+                b[i*3+1] = 0.000
+                b[i*3+2] = 0.003
         if False:
             if mesh.supports[i, 1] == -1 or mesh.supports[i, 1] == 1:
                 bc_count+=1
