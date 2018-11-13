@@ -50,7 +50,7 @@ def solve_quadpy(mesh,showstats=False):
                 b[i*3] = 0
                 b[i*3+1] = 0
                 b[i*3+2] = 0
-        if True:
+        if False:
             if mesh.supports[i, 2] == 0.15:
                 bc_count+=1
                 K[i*3, :] = np.zeros((1, nr*3))

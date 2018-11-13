@@ -27,14 +27,14 @@ def main():
         mesh.plotMesh()
     if args.solvequadpy:
         mesh = Mesh()
-        mesh.loadMesh("/home/leon/Documents/RCI/TMA4220_NumPDE/models/export/zugstab.med")
+        mesh.loadMesh("/home/leon/Documents/RCI/TMA4220_NumPDE/models/export/giraffe.med")
         #mesh.loadexamplemesh()
         mesh.plotMesh()
         stress, ux,uy,uz = solve_quadpy(mesh)
         #plot_scatter_structure(mesh,ux,uy,uz)
         #plot_stress(mesh,stress)
         #plot_stress_meshed(mesh,stress)
-        export_matlab(mesh,stress)
+        export_matlab(mesh,stress,ux,uy,uz)
         #trimeshit(mesh,0)
         #trisurfit(mesh,stress)
 

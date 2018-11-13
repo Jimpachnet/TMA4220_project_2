@@ -87,7 +87,7 @@ def plot_stress_meshed(mesh,stress):
     py.plot(fig, filename='/home/leon/Documents/RCI/TMA4220_NumPDE/3d-mesh-tetrahedron-python')
 
 
-def export_matlab(mesh,stress):
+def export_matlab(mesh,stress,ux,uy,uz):
     print("[Info] Exporting to MATLAB")
     tetras = mesh.tetraeders
     points = mesh.supports
@@ -105,8 +105,8 @@ def export_matlab(mesh,stress):
         for j in range(nrr):
             ver[i] += v[founds[j]]/nrr
 
-
-    sio.savemat('solution.mat', {'tet': tetras,'X': points,'val': values,'nodevals': ver})
+    deformation = np.array([ux,uy,uz])
+    sio.savemat('solution.mat', {'tet': tetras,'X': points,'val': values,'nodevals': ver,'deformation':deformation})
     meshio.write_points_cells("testtest.stl", mesh.supports,cells)
 
 def trimeshit(calc_mesh,stress):
