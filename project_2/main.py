@@ -20,7 +20,7 @@ def main():
     parser.add_argument('-m', "--mesh", help="Load mesh", action='store_true')
     parser.add_argument('-sqp', "--solvequadpy", help="Uses quadpy to solve the problem", action='store_true')
     args = parser.parse_args()
-    basepath = "/home/leon/Documents/RCI/TMA4220_NumPDE/models/meshes/"
+    basepath = "/home/leon/Documents/RCI/TMA4220_NumPDE/models/netgen/"
 
     if args.mesh:
         mesh = Mesh()
@@ -29,8 +29,8 @@ def main():
     if args.solvequadpy:
         mesh = Mesh()
         configuration = Configuration()
-        configuration.loadconfig(basepath+"beam_1.ini")
-        mesh.loadMesh(basepath+"beam_1.med")
+        configuration.loadconfig(basepath+"harbourbridge.ini")
+        mesh.loadMesh(basepath+"harbourbridge.geo")
         mesh.plotMesh()
         stress, ux,uy,uz = solve_quadpy(mesh,configuration)
         #plot_scatter_structure(mesh,ux,uy,uz)

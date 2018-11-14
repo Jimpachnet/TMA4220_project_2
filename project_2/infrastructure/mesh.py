@@ -17,10 +17,10 @@ class Mesh:
 
     def loadMesh(self, path = "/home/leon/Documents/RCI/TMA4220_NumPDE/models/export/cube.med"):
         print("[Info] Loading infrastructure")
-        mesh = meshio.read(path)
+        mesh = meshio.read(path,file_format='gmsh2')
         self.tetraeders = mesh.cells['tetra']
         self.triangles = mesh.cells['triangle']
-        self.supports = mesh.points
+        self.supports = -mesh.points
         print("[Info] Loaded " + str(self.supports.shape[0]) + " supports")
         print("[Info] Loaded " + str(self.tetraeders.shape[0]) + " simplices")
     def loadexamplemesh(self):
