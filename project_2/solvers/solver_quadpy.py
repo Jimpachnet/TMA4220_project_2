@@ -65,7 +65,7 @@ def solve_quadpy(mesh,config,showstats=False):
                 nm_count+=1
 
         if True:
-            if mesh.supports[i, 2] == 1226.55508:
+            if mesh.supports[i, 2] == 0:
                 bc_count+=1
                 K[i*3, :] = np.zeros((1, nr*3))
                 K[i*3, i*3] = 1
