@@ -3,6 +3,7 @@ Implements the solver
 """
 
 import numpy as np
+import quadpy as qp
 from scipy.sparse import lil_matrix,csr_matrix
 import matplotlib.pyplot as plt
 import scipy.io
@@ -57,34 +58,22 @@ def solve(mesh, config, showstats=False):
     F = 100
     forcetrianglelist =  []
 
-    int0 = qp.triangle.integrate(
-    lambda x: 1-x[0]-x[1],
-    [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
-    qp.triangle.XiaoGimbutas(5)
-    )
-    print(int0)
-    int1 = qp.triangle.integrate(
-    lambda x: x[0],
-    [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
-    qp.triangle.XiaoGimbutas(5)
-    )
-    print(int1)
 
-    int2 = qp.triangle.integrate(
-    lambda x: x[1],
-    [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
-    qp.triangle.XiaoGimbutas(5)
-    )
-    print(int2)
+    #us = np.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
+    #int0 = qp.triangle.integrate(lambda x: 1-x[0]-x[1], us, qp.triangle.XiaoGimbutas(5))
+    #print(int0)
+    #int1 = qp.triangle.integrate(lambda x: x[0],us,qp.triangle.XiaoGimbutas(5))
+    #print(int1)
 
+    #int2 = qp.triangle.integrate(lambda x: x[1], us,qp.triangle.XiaoGimbutas(5) )
+    #print(int2)
+
+    refVal = 0.16666666666666666;
 
     p1ref = P1ReferenceElement()
     for ft in forcetrianglelist:
-
-        co = (x, y)
-        xp = np.array([x - v0_coord[0], y - v0_coord[1]])
-        x_tr = (jinvt.dot(xp)[0], jinvt.dot(xp)[1])
-        val = p1_ref.value(x_tr)[i]
+        ta = ft
+        
 
 
     for i in range(nr):

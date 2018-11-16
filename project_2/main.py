@@ -27,11 +27,11 @@ def main():
         mesh = Mesh()
         mesh.loadMesh()
         mesh.plotMesh()
-    if args.solvequadpy:
+    if args.solve:
         mesh = Mesh()
         configuration = Configuration()
         configuration.loadconfig(basepath+"harbourbridge.ini")
-        mesh.loadMesh(basepath+"harbourbridge_fine_fine.geo")
+        mesh.loadMesh(basepath+"harbourbridge.geo")
         #mesh.loadMesh(basepath + "cube.geo")
         mesh.plotMesh()
         stress, ux,uy,uz = solve(mesh, configuration)
