@@ -1,5 +1,5 @@
 """
-Implements the solver using the quadpy package for integration
+Implements the solver
 """
 
 import numpy as np
@@ -57,9 +57,30 @@ def solve(mesh, config, showstats=False):
     F = 100
     forcetrianglelist =  []
 
+    int0 = qp.triangle.integrate(
+    lambda x: 1-x[0]-x[1],
+    [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+    qp.triangle.XiaoGimbutas(5)
+    )
+    print(int0)
+    int1 = qp.triangle.integrate(
+    lambda x: x[0],
+    [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+    qp.triangle.XiaoGimbutas(5)
+    )
+    print(int1)
+
+    int2 = qp.triangle.integrate(
+    lambda x: x[1],
+    [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+    qp.triangle.XiaoGimbutas(5)
+    )
+    print(int2)
+
+
     p1ref = P1ReferenceElement()
     for ft in forcetrianglelist:
-        def
+
         co = (x, y)
         xp = np.array([x - v0_coord[0], y - v0_coord[1]])
         x_tr = (jinvt.dot(xp)[0], jinvt.dot(xp)[1])
