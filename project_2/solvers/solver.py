@@ -11,7 +11,8 @@ import scipy.sparse.linalg
 import scipy.io as sio
 import time
 from project_2.infrastructure.p1_reference_element import P1ReferenceElement
-from project_2.infrastructure.affine_transformation import AffineTransformation
+from project_2.infrastructure.affine_transformation_3d import AffineTransformation3D
+from project_2.infrastructure.affine_transformation_2d import AffineTransformation2D
 
 
 
@@ -68,13 +69,27 @@ def solve(mesh, config, showstats=False):
     #int2 = qp.triangle.integrate(lambda x: x[1], us,qp.triangle.XiaoGimbutas(5) )
     #print(int2)
 
-    refVal = 0.16666666666666666;
+    refVal = 0.16666666666666666
 
-    p1ref = P1ReferenceElement()
-    for ft in forcetrianglelist:
-        ta = ft
-        
+    pointsarr = np.array([[6138,6332,6334 ],
+                          [6138, 6242,6334]
+                          [6402,6242,6334],
+                          [6402,6465,6334],
+                          [6470,6334,6459],
+                          [6332,6334,6470]])
 
+    atraf2d = AffineTransformation2D()
+    A = 0
+    for ft in pointsarr:
+        print(ft)
+        v0_coord = (mesh.supports[0, ft[0]], mesh.supports[1, ft[0]])
+        v1_coord = (mesh.supports[0, ft[1]], mesh.supports[1, ft[1]])
+        v2_coord = (mesh.supports[0, ft[2]], mesh.supports[1, ft[1]])
+        atraf2d.set_target_cell(v0_coord, v1_coord, v2_coord)
+        A+=atraf2d.get_determinant()/2
+
+    print("A")
+    print(A)
 
     for i in range(nr):
         if True:
@@ -163,7 +178,7 @@ def solve(mesh, config, showstats=False):
 def generate_stress(ux,uy,uz,mesh,D):
     varnr = mesh.tetraeders.shape[0]
     p1_ref = P1ReferenceElement()
-    atraf = AffineTransformation()
+    atraf = AffineTransformation3D()
 
     strain = np.zeros((varnr,6))
     stress = np.zeros((varnr, 6))
@@ -263,7 +278,7 @@ def generate_linear_form(mesh,density):
     def f3(density,x=0):
         return -9.81*density
 
-    atraf = AffineTransformation()
+    atraf = AffineTransformation3D()
     varnr = mesh.supports.shape[0]
     b = np.zeros((varnr * 3, 1))
     for n in range(mesh.tetraeders.shape[0]):

@@ -8,7 +8,7 @@ Implements the affine transformation from the reference element
 import numpy as np
 
 
-class AffineTransformation:
+class AffineTransformation3D:
     """
     Defines the affine transformation
     """

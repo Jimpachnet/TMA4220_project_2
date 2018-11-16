@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from project_2.infrastructure.affine_transformation import AffineTransformation
+from project_2.infrastructure.affine_transformation_3d import AffineTransformation3D
 
 class TestCode(unittest.TestCase):
     """
@@ -14,7 +14,7 @@ class TestCode(unittest.TestCase):
         :return:
         """
 
-        affine_trafo = AffineTransformation()
+        affine_trafo = AffineTransformation3D()
 
         # Reference
         x0 = (0, 0, 0)
