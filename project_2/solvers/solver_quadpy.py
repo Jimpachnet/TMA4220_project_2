@@ -3,7 +3,6 @@ Implements the solver using the quadpy package for integration
 """
 
 import numpy as np
-import quadpy as qp
 from scipy.sparse import lil_matrix,csr_matrix
 import matplotlib.pyplot as plt
 import scipy.io
@@ -17,9 +16,9 @@ from project_2.infrastructure.affine_transformation import AffineTransformation
 
 
 
-def solve_quadpy(mesh,config,showstats=False):
+def solve(mesh, config, showstats=False):
     """
-    Solves the system using the quadpy pack
+    Solves the system
     :param mesh: The mesh on which to work
     :param config: The configuration file
     :param showstats: Should stats be displayed
@@ -54,18 +53,20 @@ def solve_quadpy(mesh,config,showstats=False):
     nm_count = 0
 
 
-    A = 0.25*0.25
-    F = 10000
-    for i in range(nr):
-        if False:
-            if mesh.supports[i, 0] > 0.25 and mesh.supports[i, 0] < 0.75 and mesh.supports[i, 1] > 0.25 and mesh.supports[i, 1] < 0.75 and mesh.supports[i, 2] == 1:
-                b[i*3+2] += F/A
-                nm_count+=1
-        if False:
-            if  mesh.supports[i, 2] == 0.01 and mesh.supports[i, 0] >=0.99:
-                b[i*3+2] += 100
-                nm_count+=1
 
+    F = 100
+    forcetrianglelist =  []
+
+    p1ref = P1ReferenceElement()
+    for ft in forcetrianglelist:
+        def
+        co = (x, y)
+        xp = np.array([x - v0_coord[0], y - v0_coord[1]])
+        x_tr = (jinvt.dot(xp)[0], jinvt.dot(xp)[1])
+        val = p1_ref.value(x_tr)[i]
+
+
+    for i in range(nr):
         if True:
             if mesh.supports[i, 2] == 0:
                 bc_count+=1
