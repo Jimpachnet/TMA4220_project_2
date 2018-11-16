@@ -20,7 +20,8 @@ class Mesh:
         mesh = meshio.read(path,file_format='gmsh2')
         self.tetraeders = mesh.cells['tetra']
         self.triangles = mesh.cells['triangle']
-        self.supports = (-mesh.points*0.02731906218)
+        #self.supports = (-mesh.points*0.02731906218)
+        self.supports = mesh.points*0.02731906218
         self.supports = self.supports-np.min(self.supports,axis=0)
         print(np.min(self.supports,axis=0))
         print(np.min(self.supports,axis=0))

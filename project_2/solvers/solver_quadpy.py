@@ -9,8 +9,10 @@ import matplotlib.pyplot as plt
 import scipy.io
 import scipy.sparse.linalg
 import scipy.io as sio
+import time
 from project_2.infrastructure.p1_reference_element import P1ReferenceElement
 from project_2.infrastructure.affine_transformation import AffineTransformation
+
 
 
 
@@ -35,7 +37,7 @@ def solve_quadpy(mesh,config,showstats=False):
 
     print("[Info] Solving system using quadpy")
     print("[Info] Generating stiffness matrix")
-    K = generate_stiffness_matrix_paper(mesh,D)
+    K = generate_stiffness_matrix(mesh, D)
 
 
     if showstats:
@@ -130,8 +132,19 @@ def solve_quadpy(mesh,config,showstats=False):
     uz = u[2::3]
 
     print("[Info] Calculating stress")
-    stress = generate_stress(ux,uy,uz,mesh,D)
+    #time_start_1 = time.time()
+    #stress_1 = generate_stress(ux,uy,uz,mesh,D)
+    #time_middle_1 = time.time()
+    stress = generate_stress_fast(ux,uy,uz,mesh,D).T
+    #time_end = time.time()
 
+    #print(time_middle_1-time_start_1)
+    #print(time_end-time_middle_1)
+
+    #print(stress_1.shape)
+    #print(stress_2.shape)
+
+    #print(np.linalg.norm((stress_2-stress_1)))
 
     return stress, ux, uy, uz
 
@@ -185,15 +198,51 @@ def generate_stress(ux,uy,uz,mesh,D):
         strain[n,0] = dxx
         strain[n, 1] = dyy
         strain[n, 2] = dzz
-        strain[n, 3] = dxz
-        strain[n, 4] = dxy
+        strain[n, 4] = dxz
+        strain[n, 3] = dxy
         strain[n, 5] = dyz
 
         stress[n,:] = D.dot(strain[n,:])
 
 
     return stress
+def generate_stress_fast(ux,uy,uz,mesh,D):
+    varnr = mesh.tetraeders.shape[0]
+    strain = np.zeros((varnr,6))
+    u = np.array([ux,uy,uz])
 
+    for n in range(varnr):
+        v0_coord = (mesh.supports[mesh.tetraeders[n,0],0],mesh.supports[mesh.tetraeders[n,0],1],mesh.supports[mesh.tetraeders[n,0],2])
+        v1_coord = (mesh.supports[mesh.tetraeders[n,1],0],mesh.supports[mesh.tetraeders[n,1],1],mesh.supports[mesh.tetraeders[n,1],2])
+        v2_coord = (mesh.supports[mesh.tetraeders[n,2],0],mesh.supports[mesh.tetraeders[n,2],1],mesh.supports[mesh.tetraeders[n,2],2])
+        v3_coord = (mesh.supports[mesh.tetraeders[n,3],0],mesh.supports[mesh.tetraeders[n,3],1],mesh.supports[mesh.tetraeders[n,3],2])
+
+        PhiGrad = np.ones((4,4))
+        vertices_ = np.squeeze(np.array([v0_coord, v1_coord, v2_coord,v3_coord]))
+        PhiGrad[1:4,0:] = vertices_.T
+        PhiGrad = np.linalg.solve(PhiGrad,np.squeeze(np.array([[0,0,0], [1,0,0], [0,1,0], [0,0,1]])))
+
+        valmat = np.zeros((3,4))
+
+        for i in range(3):
+            for j in range(4):
+                valmat[i,j] = u[i,mesh.tetraeders[n,j]]
+
+
+        distortion = valmat.dot(PhiGrad)
+        distortion = 0.5*(distortion+distortion.T)
+
+        eps = np.zeros((6))
+        eps[0:3] = np.diagonal(distortion)
+        eps[3] = distortion[0,1]
+        eps[4] = distortion[0, 2]
+        eps[5] = distortion[1, 2]
+        strain[n,:] = eps
+
+
+
+
+    return D.dot(strain.T)
 
 def generate_linear_form(mesh,density):
     def f1(x=0):
@@ -222,7 +271,7 @@ def generate_linear_form(mesh,density):
 
 
 
-def generate_stiffness_matrix_paper(mesh,D):
+def generate_stiffness_matrix(mesh, D):
     varnr = mesh.supports.shape[0]
     K = lil_matrix((varnr * 3, varnr * 3))
 
