@@ -31,7 +31,7 @@ def main():
         mesh = Mesh()
         configuration = Configuration()
         configuration.loadconfig(basepath+"harbourbridge.ini")
-        mesh.loadMesh(basepath+"harbourbridge.geo")
+        mesh.loadMesh(basepath+"balken_coarse.geo")
         #mesh.loadMesh(basepath + "cube.geo")
         mesh.plotMesh()
         stress, ux,uy,uz = solve(mesh, configuration)

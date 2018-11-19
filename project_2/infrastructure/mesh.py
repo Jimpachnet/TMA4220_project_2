@@ -21,8 +21,10 @@ class Mesh:
         self.tetraeders = mesh.cells['tetra']
         self.triangles = mesh.cells['triangle']
         #self.supports = (-mesh.points*0.02731906218)
-        self.supports = mesh.points*0.02731906218
-        self.supports = self.supports-np.min(self.supports,axis=0)
+        #self.supports = -mesh.points*0.02731906218
+        self.supports = mesh.points/1000
+        #self.supports = self.supports-np.min(self.supports,axis=0)
+
         print(np.min(self.supports,axis=0))
         print(np.min(self.supports,axis=0))
         print(np.max(self.supports, axis=0))
