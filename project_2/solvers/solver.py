@@ -13,6 +13,7 @@ import time
 from project_2.infrastructure.p1_reference_element import P1ReferenceElement
 from project_2.infrastructure.affine_transformation_3d import AffineTransformation3D
 from project_2.infrastructure.affine_transformation_2d import AffineTransformation2D
+from project_2.boundaryconditions import bending_beam_bc
 
 
 
@@ -49,140 +50,7 @@ def solve(mesh, config, showstats=False):
     print("[Info] Generating linear form")
     b = generate_linear_form(mesh,density=config.density)
 
-    # BC Dirichlet
-    nr = np.shape(mesh.supports)[0]
-    bc_count = 0
-    nm_count = 0
-
-
-
-
-
-    #us = np.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
-    #int0 = qp.triangle.integrate(lambda x: 1-x[0]-x[1], us, qp.triangle.XiaoGimbutas(5))
-    #print(int0)
-    #int1 = qp.triangle.integrate(lambda x: x[0],us,qp.triangle.XiaoGimbutas(5))
-    #print(int1)
-
-    #int2 = qp.triangle.integrate(lambda x: x[1], us,qp.triangle.XiaoGimbutas(5) )
-    #print(int2)
-
-    if False:
-        F = -1000000000 * 9.81
-        refVal = 0.16666666666666666
-
-
-        pointsarr = np.array([[6138,6332,6334 ],
-                              [6138, 6242,6334],
-                              [6402,6242,6334],
-                              [6402,6465,6334],
-                              [6470,6334,6465],
-                              [6332,6334,6470]])
-
-
-        atraf2d = AffineTransformation2D()
-        A = 0
-        for ft in pointsarr:
-            v0_coord = (mesh.supports[ft[0],0], mesh.supports[ft[0],1])
-            v1_coord = (mesh.supports[ft[1],0], mesh.supports[ft[1],1])
-            v2_coord = (mesh.supports[ft[2],0], mesh.supports[ft[2],1])
-            atraf2d.set_target_cell(v0_coord, v1_coord, v2_coord)
-            A+=np.abs(atraf2d.get_determinant())/2
-
-        p = F/A
-
-        for ft in pointsarr:
-            v0_coord = (mesh.supports[ft[0],0], mesh.supports[ft[0],1])
-            v1_coord = (mesh.supports[ft[1],0], mesh.supports[ft[1],1])
-            v2_coord = (mesh.supports[ft[2],0], mesh.supports[ft[2],1])
-            atraf2d.set_target_cell(v0_coord, v1_coord, v2_coord)
-            for brr in ft:
-                b[brr*3+2]+=p*refVal*np.abs(atraf2d.get_determinant())
-
-    if True:
-        F=1000000
-        refVal = 0.16666666666666666
-
-
-        #pointsarr = np.array([[36,4602,6282 ],
-        #                      [4602,810,6281],
-        #                      [810,6281,9147],
-        #                      [4602,6282,6281]])
-        #
-
-        pointsarr = np.array([[5,7,17 ],
-                              [7,27,17]])
-
-
-        atraf2d = AffineTransformation2D()
-        A = 0
-        for ft in pointsarr:
-            v0_coord = (mesh.supports[ft[0],0], mesh.supports[ft[0],1])
-            v1_coord = (mesh.supports[ft[1],0], mesh.supports[ft[1],1])
-            v2_coord = (mesh.supports[ft[2],0], mesh.supports[ft[2],1])
-            atraf2d.set_target_cell(v0_coord, v1_coord, v2_coord)
-            A+=np.abs(atraf2d.get_determinant())/2
-
-        p = F/A
-
-
-        for ft in pointsarr:
-            v0_coord = (mesh.supports[ft[0],0], mesh.supports[ft[0],1])
-            v1_coord = (mesh.supports[ft[1],0], mesh.supports[ft[1],1])
-            v2_coord = (mesh.supports[ft[2],0], mesh.supports[ft[2],1])
-            atraf2d.set_target_cell(v0_coord, v1_coord, v2_coord)
-            for brr in ft:
-                b[brr*3+2]+=p*refVal*np.abs(atraf2d.get_determinant())
-
-    for i in range(nr):
-        if False:
-            if mesh.supports[i, 2] == 0:
-                bc_count+=1
-                K[i*3, :] = np.zeros((1, nr*3))
-                K[i*3, i*3] = 1
-                K[i*3+1, :] = np.zeros((1, nr*3))
-                K[i*3+1, i*3+1] = 1
-                K[i*3+2, :] = np.zeros((1, nr*3))
-                K[i*3+2, i*3+2] = 1
-                b[i*3] = 0
-                b[i*3+1] = 0
-                b[i*3+2] = 0
-        if False:
-            if mesh.supports[i, 2] == 0.15:
-                bc_count+=1
-                K[i*3, :] = np.zeros((1, nr*3))
-                K[i*3, i*3] = 1
-                K[i*3+1, :] = np.zeros((1, nr*3))
-                K[i*3+1, i*3+1] = 1
-                K[i*3+2, :] = np.zeros((1, nr*3))
-                K[i*3+2, i*3+2] = 1
-                b[i*3] = 0.000
-                b[i*3+1] = 0.000
-                b[i*3+2] = 0.003
-        if False:
-            if mesh.supports[i, 1] == -1 or mesh.supports[i, 1] == 1:
-                bc_count+=1
-                K[i*3, :] = np.zeros((1, nr*3))
-                K[i*3, i*3] = 1
-                K[i*3+1, :] = np.zeros((1, nr*3))
-                K[i*3+1, i*3+1] = 1
-                K[i*3+2, :] = np.zeros((1, nr*3))
-                K[i*3+2, i*3+2] = 1
-                b[i*3] = 0
-                b[i*3+1] = 0
-                b[i*3+2] = 0
-        if True:
-            if mesh.supports[i, 0] == 0 or mesh.supports[i, 0] == 0:
-                bc_count+=1
-                K[i*3, :] = np.zeros((1, nr*3))
-                K[i*3, i*3] = 1
-                K[i*3+1, :] = np.zeros((1, nr*3))
-                K[i*3+1, i*3+1] = 1
-                K[i*3+2, :] = np.zeros((1, nr*3))
-                K[i*3+2, i*3+2] = 1
-                b[i*3] = 0
-                b[i*3+1] = 0
-                b[i*3+2] = 0
+    b,K,bc_count,nm_count = bending_beam_bc.apply_bc(mesh,K, b)
 
 
     print("[Info] Imposed Dirichlet BC on "+str(bc_count)+" points")
@@ -196,14 +64,13 @@ def solve(mesh, config, showstats=False):
     #u = np.squeeze(np.linalg.solve(K,b))
     #u = np.linalg.solve(K,b)
     u = scipy.sparse.linalg.spsolve(K,b)
-    print(np.min(u))
     ux = u[0::3]
     uy = u[1::3]
     uz = u[2::3]
 
     print("[Info] Calculating stress")
     #time_start_1 = time.time()
-    #stress_1 = generate_stress(ux,uy,uz,mesh,D)
+    #stress = generate_stress(ux,uy,uz,mesh,D)
     #time_middle_1 = time.time()
     stress = generate_stress_fast(ux,uy,uz,mesh,D).T
     #time_end = time.time()
@@ -320,7 +187,7 @@ def generate_linear_form(mesh,density):
     def f2(x=0):
         return 0
     def f3(density,x=0):
-        return -9.81*density*0
+        return -9.81*density*10000*0
 
     atraf = AffineTransformation3D()
     varnr = mesh.supports.shape[0]

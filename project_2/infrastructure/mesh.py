@@ -23,12 +23,8 @@ class Mesh:
         #self.supports = (-mesh.points*0.02731906218)
         #self.supports = -mesh.points*0.02731906218
         self.supports = mesh.points/1000
-        #self.supports = self.supports-np.min(self.supports,axis=0)
+        self.supports = self.supports-np.min(self.supports,axis=0)
 
-        print(np.min(self.supports,axis=0))
-        print(np.min(self.supports,axis=0))
-        print(np.max(self.supports, axis=0))
-        print(np.max(self.supports, axis=0)-np.min(self.supports, axis=0))
         print("[Info] Loaded " + str(self.supports.shape[0]) + " supports")
         print("[Info] Loaded " + str(self.tetraeders.shape[0]) + " simplices")
     def loadexamplemesh(self):
