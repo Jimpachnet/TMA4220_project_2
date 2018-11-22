@@ -6,6 +6,13 @@ import numpy as np
 from project_2.infrastructure.affine_transformation_2d import AffineTransformation2D
 
 def apply_bc(mesh,K,b):
+    """
+    Applies the BC to the structure
+    :param mesh: The mesh
+    :param K: The stiffness matrix
+    :param b: the linear form
+    :return: Linear form, Stiffness matrix and counts
+    """
     # BC Dirichlet
     nr = np.shape(mesh.supports)[0]
     bc_count = 0
@@ -15,18 +22,7 @@ def apply_bc(mesh,K,b):
 
 
 
-    #us = np.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
-    #int0 = qp.triangle.integrate(lambda x: 1-x[0]-x[1], us, qp.triangle.XiaoGimbutas(5))
-    #print(int0)
-    #int1 = qp.triangle.integrate(lambda x: x[0],us,qp.triangle.XiaoGimbutas(5))
-    #print(int1)
-
-    #int2 = qp.triangle.integrate(lambda x: x[1], us,qp.triangle.XiaoGimbutas(5) )
-    #print(int2)
-
-
-
-    if True:
+    if False:
         F=1000000
         refVal = 0.16666666666666666
 
