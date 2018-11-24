@@ -8,7 +8,7 @@ Implements the affine transformation from the reference element
 import numpy as np
 
 
-class AffineTransformation:
+class AffineTransformation3D:
     """
     Defines the affine transformation
     """
@@ -68,7 +68,7 @@ class AffineTransformation:
 
         # Check regularity
         detJ = np.linalg.det(J)
-        if np.isclose(detJ, 0):
+        if detJ == 0:
             print(J)
             print(v0)
             print(v1)
