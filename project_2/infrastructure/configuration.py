@@ -8,12 +8,13 @@ Implements a problem configuration
 import numpy as np
 import configparser
 
+
 class Configuration():
     """
     Defines the config
     """
 
-    def loadconfig(self,path):
+    def loadconfig(self, path):
         """
         Loads the config
         :param path: Path to the config file

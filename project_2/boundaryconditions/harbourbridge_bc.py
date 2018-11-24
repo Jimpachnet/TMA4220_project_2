@@ -14,15 +14,17 @@ def apply_bc(mesh, K, b):
     :param b: the linear form
     :return: Linear form, Stiffness matrix and counts
     """
-    # BC Dirichlet
+
     nr = np.shape(mesh.supports)[0]
     bc_count = 0
     nm_count = 0
 
+    #Activate to apply Neumann
     if True:
         F = 1000000000 * 9.81
         refVal = 0.16666666666666666
 
+        #Different Meshes
         pointsarr = np.array([[95751, 83578, 50820]])
 
         # pointsarr = np.array([[6138,6332,6334 ],
@@ -50,6 +52,8 @@ def apply_bc(mesh, K, b):
             atraf2d.set_target_cell(v0_coord, v1_coord, v2_coord)
             for brr in ft:
                 b[brr * 3 + 2] += p * refVal * np.abs(atraf2d.get_determinant())
+
+    # BC Dirichlet
 
     for i in range(nr):
         if True:

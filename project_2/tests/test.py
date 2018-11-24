@@ -3,6 +3,7 @@ import numpy as np
 
 from project_2.infrastructure.affine_transformation_3d import AffineTransformation3D
 
+
 class TestCode(unittest.TestCase):
     """
     Useful test cases
@@ -26,6 +27,7 @@ class TestCode(unittest.TestCase):
         # Invalid simplex
         x1 = x0
         self.assertEqual(affine_trafo.get_determinant(x0, x1, x2, x3), 0)
+
 
 if __name__ == '__main__':
     print("Starting unittest...")

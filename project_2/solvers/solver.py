@@ -80,7 +80,6 @@ def solve(mesh, config, showstats=False):
     return stress, ux, uy, uz
 
 
-
 def generate_stress(ux, uy, uz, mesh, D):
     """
     Calculate the stress

@@ -43,7 +43,8 @@ class AffineTransformation3D:
             v2 = self.v2
             v3 = self.v3
 
-        J = np.array([[v1[0] - v0[0], v2[0] - v0[0], v3[0] - v0[0]], [v1[1] - v0[1], v2[1] - v0[1], v3[1] - v0[1]],[v1[2] - v0[2], v2[2] - v0[2], v3[2] - v0[2]]])
+        J = np.array([[v1[0] - v0[0], v2[0] - v0[0], v3[0] - v0[0]], [v1[1] - v0[1], v2[1] - v0[1], v3[1] - v0[1]],
+                      [v1[2] - v0[2], v2[2] - v0[2], v3[2] - v0[2]]])
         return J
 
     def get_inverse_jacobian(self, v0=None, v1=None, v2=None, v3=None):
@@ -63,8 +64,8 @@ class AffineTransformation3D:
             v2 = self.v2
             v3 = self.v3
 
-
-        J = np.array([[v1[0] - v0[0], v2[0] - v0[0], v3[0] - v0[0]], [v1[1] - v0[1], v2[1] - v0[1], v3[1] - v0[1]],[v1[2] - v0[2], v2[2] - v0[2], v3[2] - v0[2]]])
+        J = np.array([[v1[0] - v0[0], v2[0] - v0[0], v3[0] - v0[0]], [v1[1] - v0[1], v2[1] - v0[1], v3[1] - v0[1]],
+                      [v1[2] - v0[2], v2[2] - v0[2], v3[2] - v0[2]]])
 
         # Check regularity
         detJ = np.linalg.det(J)
@@ -94,7 +95,7 @@ class AffineTransformation3D:
             v2 = self.v2
             v3 = self.v3
 
-
-        J = np.array([[v1[0] - v0[0], v2[0] - v0[0], v3[0] - v0[0]], [v1[1] - v0[1], v2[1] - v0[1], v3[1] - v0[1]],[v1[2] - v0[2], v2[2] - v0[2], v3[2] - v0[2]]])
+        J = np.array([[v1[0] - v0[0], v2[0] - v0[0], v3[0] - v0[0]], [v1[1] - v0[1], v2[1] - v0[1], v3[1] - v0[1]],
+                      [v1[2] - v0[2], v2[2] - v0[2], v3[2] - v0[2]]])
 
         return np.linalg.det(J)

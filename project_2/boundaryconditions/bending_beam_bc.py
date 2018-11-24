@@ -13,15 +13,11 @@ def apply_bc(mesh,K,b):
     :param b: the linear form
     :return: Linear form, Stiffness matrix and counts
     """
-    # BC Dirichlet
     nr = np.shape(mesh.supports)[0]
     bc_count = 0
     nm_count = 0
 
-
-
-
-
+    #Activate to apply Neumann BC
     if False:
         F=1000000
         refVal = 0.16666666666666666
@@ -58,6 +54,7 @@ def apply_bc(mesh,K,b):
             for brr in ft:
                 b[brr*3+2]+=p*refVal*np.abs(atraf2d.get_determinant())
 
+    # BC Dirichlet
     for i in range(nr):
         if True:
             if mesh.supports[i, 0] == 0 or mesh.supports[i, 0] == 0:

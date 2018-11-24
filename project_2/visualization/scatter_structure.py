@@ -14,6 +14,13 @@ import meshio
 import trimesh
 
 def plot_scatter_structure(mesh,ux,uy,uz):
+    """
+    Plot the nodes with color indicatin 4th dimension
+    :param mesh: The mesh
+    :param ux: The deformation in x
+    :param uy: The deformation in y
+    :param uz: The deformation in z
+    """
     x = mesh.supports[:,0]
     y = mesh.supports[:, 1]
     z = mesh.supports[:, 2]
@@ -30,6 +37,11 @@ def plot_scatter_structure(mesh,ux,uy,uz):
     plt.show()
 
 def plot_stress(mesh,stress):
+    """
+    Visualizes a pointcloud of nodes with the color visualizing stress
+    :param mesh: The mesh
+    :param stress: The stress
+    """
     varnr = mesh.tetraeders.shape[0]
     x = np.zeros(varnr)
     y = np.zeros(varnr)
@@ -56,6 +68,11 @@ def plot_stress(mesh,stress):
     plt.show()
 
 def plot_stress_meshed(mesh,stress):
+    """
+    Plots the stress on a real mesh using plotly
+    :param mesh: The mesh
+    :param stress: The stress
+    """
     data = [
         go.Mesh3d(
             x=[0, 1, 2, 0],
@@ -88,6 +105,14 @@ def plot_stress_meshed(mesh,stress):
 
 
 def export_matlab(mesh,stress,ux,uy,uz):
+    """
+    Export stress, mesh and deformation to a .mat file
+    :param mesh: The mesn
+    :param stress: The stress
+    :param ux: The deformation in x
+    :param uy: The deformation in y
+    :param uz: The deformation in z
+    """
     print("[Info] Exporting to MATLAB")
     tetras = mesh.tetraeders
     points = mesh.supports
@@ -109,22 +134,15 @@ def export_matlab(mesh,stress,ux,uy,uz):
     sio.savemat('solution.mat', {'tet': tetras,'X': points,'val': values,'nodevals': ver,'deformation':deformation})
     meshio.write_points_cells("testtest.stl", mesh.supports,cells)
 
-def trimeshit(calc_mesh,stress):
-    mesh = trimesh.load('testtest.stl')
-    #v = np.linalg.norm(stress[:, :], axis=1)
-
-    i = 0
-    #print(np.shape(mesh.))
-    print(mesh.faces[0,:])
-    print(calc_mesh.triangles[0,:])
-    for face in mesh.faces.T:
-        mesh.visual.face_colors[face] = 10000
-        i+=1
-    mesh.show()
 
 def trisurfit(mesh,stress):
+    """
+    Experimental methods to visualize results using plotly
+    :param mesh: The mesh
+    :param stress: The stress
+    """
     print("[Info] Plotting")
-    plotly.tools.set_credentials_file(username='Jimpachnet', api_key='')
+    plotly.tools.set_credentials_file(username='', api_key='')
     outers = mesh.triangles
     ptz = mesh.supports
     print(np.shape(outers))
