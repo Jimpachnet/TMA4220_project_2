@@ -13,7 +13,7 @@ import time
 from project_2.infrastructure.p1_reference_element import P1ReferenceElement
 from project_2.infrastructure.affine_transformation_3d import AffineTransformation3D
 from project_2.infrastructure.affine_transformation_2d import AffineTransformation2D
-from project_2.boundaryconditions import bending_beam_bc
+from project_2.boundaryconditions import harbourbridge_bc
 
 
 def solve(mesh, config, showstats=False):
@@ -51,7 +51,7 @@ def solve(mesh, config, showstats=False):
     print("[Info] Generating linear form took " + str(time_lf) + "s")
 
     time_bc_start = time.time()
-    b, K, bc_count, nm_count = bending_beam_bc.apply_bc(mesh, K, b)
+    b, K, bc_count, nm_count = harbourbridge_bc.apply_bc(mesh, K, b)
     time_bc = time.time() - time_bc_start
     print("[Info] Applying BC took " + str(time_bc) + "s")
 
