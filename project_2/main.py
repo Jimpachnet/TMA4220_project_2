@@ -33,8 +33,9 @@ def main():
         mesh = Mesh()
         configuration = Configuration()
         configuration.loadconfig(basepath+"harbourbridge.ini")
-        mesh.loadMesh(basepath+"harbourbridge_fine_fine.geo")
+        mesh.loadMesh(basepath+"balken_coarse.geo")
         mesh.plotMesh()
+        stress, ux, uy, uz = solve(mesh, configuration)
         time_vtf_begin = time.time()
         generate_vtf("/home/leon/Documents/RCI/TMA4220_NumPDE/results/output.vtf",mesh,stress,ux,uy,uz)
         time_vtf = time.time()-time_vtf_begin
